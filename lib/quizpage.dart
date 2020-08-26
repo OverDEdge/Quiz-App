@@ -4,7 +4,6 @@ import 'package:quizzler/scorekeeper.dart';
 
 import 'button.dart';
 import "./scorekeeper.dart";
-import './answer.dart';
 import './result.dart';
 import './quizbrain.dart';
 import './question.dart';
@@ -15,62 +14,69 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  final double _answerToScorePadding = 20.0;
+  final double _answerToScorePadding = 25.0, _scoreAreaHeight = 30.0;
   final QuizBrain quizBrain = QuizBrain();
+  final ScoreKeeper scoreKeeper = ScoreKeeper();
 
-  List<Widget> scoreKeeper = [];
   int questionIndex = 0, numberOfCorrectAnswers = 0;
 
   void _addScore(bool answer) {
     setState(() {
-      questionIndex += 1; // Go to next question
+      quizBrain.nextQuestion(); // Go to next question
+
       if (answer) {
         numberOfCorrectAnswers += 1;
       }
-      scoreKeeper.add(Answer(answer));
+
+      scoreKeeper.addScore(answer);
     });
   }
 
   void _restartQuiz() {
     setState(() {
-      questionIndex = 0; // Reset question index
-      scoreKeeper = [];
+      quizBrain.restartQuiz();
+      scoreKeeper.resetScores();
       numberOfCorrectAnswers = 0; // Reset the results
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return questionIndex < quizBrain.getNumberOfQuestions()
+    return quizBrain.notEndOfQuiz()
         ? Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Question(
-                quizBrain.getQuestionText(questionIndex),
-                quizBrain.getAnswer(questionIndex),
+                quizBrain.getQuestionText(),
+                quizBrain.getAnswer(),
               ),
               Button(
                 'True',
                 Colors.green,
-                () => _addScore(quizBrain.getAnswer(questionIndex) == true),
+                () => _addScore(quizBrain.getAnswer() == true),
               ),
               Button(
                 'False',
                 Colors.red,
-                () => _addScore(quizBrain.getAnswer(questionIndex) == false),
+                () => _addScore(quizBrain.getAnswer() == false),
               ),
               SizedBox(
                 height: _answerToScorePadding,
               ),
-              ScoreKeeper(scoreKeeper),
+              SizedBox(
+                height: _scoreAreaHeight,
+                child: Wrap(
+                  children: scoreKeeper.getCurrentScores(),
+                ),
+              ),
             ],
           )
         : Result(
-            numberOfCorrectAnswers,
-            scoreKeeper.length,
+            scoreKeeper.getNumberOfCorrectAnswers(),
+            scoreKeeper.getNumberOfScores(),
             _restartQuiz,
-            scoreKeeper,
+            scoreKeeper.getCurrentScores(),
           );
   }
 }

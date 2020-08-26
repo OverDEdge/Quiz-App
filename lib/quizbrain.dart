@@ -1,4 +1,5 @@
 class QuizBrain {
+  var _questionIndex = 0;
   final List<Map<String, Object>> _questionAnswers = [
     {
       'question': 'Some cats are actually allergic to humans.',
@@ -68,24 +69,29 @@ class QuizBrain {
     },
   ];
 
-  String getQuestionText(int questionIndex) {
+  String getQuestionText() {
     /*
     Method for getting the question matching a certain index
     */
-    return _questionAnswers[questionIndex]['question'];
+    return _questionAnswers[_questionIndex]['question'];
   }
 
-  bool getAnswer(int questionIndex) {
+  bool getAnswer() {
     /*
     Method for getting the answer matching a certain index
     */
-    return _questionAnswers[questionIndex]['answer'];
+    return _questionAnswers[_questionIndex]['answer'];
   }
 
-  int getNumberOfQuestions() {
-    /*
-    Method for getting number of question
-    */
-    return _questionAnswers.length;
+  void nextQuestion() {
+    _questionIndex++;
+  }
+
+  bool notEndOfQuiz() {
+    return _questionIndex < _questionAnswers.length;
+  }
+
+  void restartQuiz() {
+    _questionIndex = 0;
   }
 }
