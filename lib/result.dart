@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'button.dart';
+import './scorekeeper.dart';
 
 class Result extends StatelessWidget {
   final int _result, _total;
+  final List<Widget> _scoreKeeper;
   final Function _restartQuiz;
 
-  Result(this._result, this._total, this._restartQuiz);
+  Result(this._result, this._total, this._restartQuiz, this._scoreKeeper);
 
-  final double _resultPadding = 10.0, _resultFontSize = 25.0;
+  final double _resultPadding = 10.0,
+      _resultFontSize = 25.0,
+      _buttonToScorePadding = 20.0;
   final int _resultFlex = 5;
   final Color _buttonColor = Colors.blue;
   final String _buttonText = 'Restart Quiz!';
@@ -48,6 +52,10 @@ class Result extends StatelessWidget {
           _buttonColor,
           _restartQuiz,
         ),
+        SizedBox(
+          height: _buttonToScorePadding,
+        ),
+        ScoreKeeper(_scoreKeeper),
       ],
     );
   }
