@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final String _buttonText;
   final Color _bgColor;
-  final Function addScore;
+  final Function _addScore;
 
   final double _buttonCurve = 10.0,
       _buttonShadowBlurRadius = 7.0,
@@ -14,7 +14,7 @@ class Button extends StatelessWidget {
       _buttonPadding = 15.0,
       _buttonTextFontSize = 20.0;
 
-  Button(this._buttonText, this._bgColor, this.addScore);
+  Button(this._buttonText, this._bgColor, this._addScore);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class Button extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            onPressed: addScore,
+            onPressed: _addScore,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(_buttonCurve),
             ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Question extends StatelessWidget {
-  final int _questionIndex;
-  final List<Map<String, Object>> _questionAnswers;
+  final String questionText;
+  final bool answer;
 
-  Question(this._questionIndex, this._questionAnswers);
+  Question(this.questionText, this.answer);
 
   final double _questionPadding = 10.0, _questionFontSize = 25.0;
   final int _questionFlex = 5;
@@ -17,7 +17,7 @@ class Question extends StatelessWidget {
         padding: EdgeInsets.all(_questionPadding),
         child: Center(
           child: Text(
-            _questionAnswers[_questionIndex]['question'] as String,
+            questionText,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: _questionFontSize,
