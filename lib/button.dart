@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AnswerButton extends StatelessWidget {
+class Button extends StatelessWidget {
   final String _buttonText;
   final Color _bgColor;
   final Function addScore;
@@ -14,7 +14,7 @@ class AnswerButton extends StatelessWidget {
       _buttonPadding = 15.0,
       _buttonTextFontSize = 20.0;
 
-  AnswerButton(this._buttonText, this._bgColor, this.addScore);
+  Button(this._buttonText, this._bgColor, this.addScore);
 
   @override
   Widget build(BuildContext context) {

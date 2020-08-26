@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/scorekeeper.dart';
 
-import './answerbutton.dart';
+import 'button.dart';
 import "./question.dart";
 import "./scorekeeper.dart";
 import './answer.dart';
+import './result.dart';
 
 class QuizPage extends StatefulWidget {
   @override
@@ -30,56 +31,52 @@ class _QuizPageState extends State<QuizPage> {
   ];
 
   List<Widget> scoreKeeper = [];
-  int questionIndex = 0;
+  int questionIndex = 0, numberOfCorrectAnswers = 0;
 
   void _addScore(bool answer) {
     setState(() {
       questionIndex += 1; // Go to next question
-
-      if (questionIndex > _questionAnswers.length - 1) {
-        questionIndex = 0;
+      if (answer) {
+        numberOfCorrectAnswers += 1;
       }
-
       scoreKeeper.add(Answer(answer));
+    });
+  }
 
-      /*
-      scoreKeeper.add(
-        answer
-            ? Icon(
-                Icons.check,
-                color: Colors.green,
-              )
-            : Icon(
-                Icons.close,
-                color: Colors.red,
-              ),
-      );
-      */
+  void _restartQuiz() {
+    setState(() {
+      questionIndex = 0; // Reset question index
+      scoreKeeper = [];
+      numberOfCorrectAnswers = 0; // Reset the results
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Question(questionIndex, _questionAnswers),
-        AnswerButton(
-          'True',
-          Colors.green,
-          () => _addScore(_questionAnswers[questionIndex]['answer'] == true),
-        ),
-        AnswerButton(
-          'False',
-          Colors.red,
-          () => _addScore(_questionAnswers[questionIndex]['answer'] == false),
-        ),
-        SizedBox(
-          height: _answerToScorePadding,
-        ),
-        ScoreKeeper(scoreKeeper),
-      ],
-    );
+    return questionIndex < _questionAnswers.length
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Question(questionIndex, _questionAnswers),
+              Button(
+                'True',
+                Colors.green,
+                () => _addScore(
+                    _questionAnswers[questionIndex]['answer'] == true),
+              ),
+              Button(
+                'False',
+                Colors.red,
+                () => _addScore(
+                    _questionAnswers[questionIndex]['answer'] == false),
+              ),
+              SizedBox(
+                height: _answerToScorePadding,
+              ),
+              ScoreKeeper(scoreKeeper),
+            ],
+          )
+        : Result(numberOfCorrectAnswers, scoreKeeper.length, _restartQuiz);
   }
 }
