@@ -5,7 +5,7 @@ A simple Quiz App that gives the user a number of questions where they can answe
 
 At the end of the Quiz the total score is displayed with a button that gives the option to restart the quiz.
 
-The inspriation for the app has been taken from the London Brewery App Turtorial: https://github.com/londonappbrewery/quizzler-flutter
+The inspiration for the app has been taken from the London Brewery App Turtorial: https://github.com/londonappbrewery/quizzler-flutter
 
 ## Main Parts
 The App is divided into seven main files:
