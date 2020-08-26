@@ -21,6 +21,9 @@ class _QuizPageState extends State<QuizPage> {
   int questionIndex = 0, numberOfCorrectAnswers = 0;
 
   void _addScore(bool answer) {
+    /*
+    Method to go to the next question in the quiz and update player score
+    */
     setState(() {
       quizBrain.nextQuestion(); // Go to next question
 
@@ -33,6 +36,9 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void _restartQuiz() {
+    /*
+    Method to run when restarting the quiz to reset parameters.
+    */
     setState(() {
       quizBrain.restartQuiz();
       scoreKeeper.resetScores();

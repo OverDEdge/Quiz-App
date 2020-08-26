@@ -84,14 +84,23 @@ class QuizBrain {
   }
 
   void nextQuestion() {
+    /*
+    Method to go to next quesiton by increasing index
+    */
     _questionIndex++;
   }
 
   bool notEndOfQuiz() {
+    /*
+    Method to check if quiz has ended. Is True as long as quiz has not ended.
+    */
     return _questionIndex < _questionAnswers.length;
   }
 
   void restartQuiz() {
+    /*
+    Resets question index at restart of quiz.
+    */
     _questionIndex = 0;
   }
 }
